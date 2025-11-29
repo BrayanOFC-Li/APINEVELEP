@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0a0e17">
+<title>Dashboard — Neveloopp</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="dark">
+  <div class="dashboard">
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <h2><i class="bi bi-robot"></i> <span>Neveloopp</span></h2>
+      </div>
+      
+      <div class="user-info">
+        <div class="user-avatar">
+          <i class="bi bi-person-fill"></i>
+        </div>
+        <div class="user-name" id="userName">Cargando...</div>
+        <div class="user-email" id="userEmail">cargando@ejemplo.com</div>
+        <div class="user-role" id="userRole">user</div>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item active" data-section="panel">
+          <i class="bi bi-speedometer2"></i>
+          <span>Panel Principal</span>
+        </a>
+        <a href="#" class="nav-item" data-section="connect">
+          <i class="bi bi-plus-circle"></i>
+          <span>Conectar Bot</span>
+        </a>
+        <a href="#" class="nav-item" data-section="bots">
+          <i class="bi bi-robot"></i>
+          <span>Mis Bots</span>
+        </a>
+        <a href="#" class="nav-item" data-section="docs">
+          <i class="bi bi-file-text"></i>
+          <span>Documentación</span>
+        </a>
+        <a href="#" class="nav-item" data-section="profile">
+          <i class="bi bi-person"></i>
+          <span>Mi Perfil</span>
+        </a>
+        <a href="/admin" class="nav-item admin-only hidden" id="adminLink">
+          <i class="bi bi-shield-check"></i>
+          <span>Panel Admin</span>
+        </a>
+        <a href="/logout" class="nav-item">
+          <i class="bi bi-box-arrow-right"></i>
+          <span>Cerrar Sesión</span>
+        </a>
+      </nav>
+    </div>
+    
+    <div class="main-content">
+      <div class="topbar">
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+          <i class="bi bi-list"></i>
+        </button>
+        <h1 id="pageTitle">Panel Principal</h1>
+        <div class="topbar-actions">
+          <button id="themeToggle" class="btn ghost" aria-label="Cambiar tema">
+            <i class="bi bi-moon-stars"></i>
+          </button>
+          <a href="/logout" class="btn alt">
+            <i class="bi bi-box-arrow-right"></i> Salir
+          </a>
+        </div>
+      </div>
+      
+      <div id="panelSection" class="section">
+        <section class="card">
+          <h3><i class="bi bi-graph-up-arrow"></i> Información del Usuario</h3>
+          <div class="kpis">
+            <div class="badge" id="kpiCoins"><i class="bi bi-coin"></i> Coins: —</div>
+            <div class="badge" id="kpiDailyCoins"><i class="bi bi-arrow-repeat"></i> Coins Diarios: —</div>
+            <div class="badge" id="kpiBots"><span class="dot"></span> Bots Activos: —</div>
+            <div class="badge" id="kpiOnline"><span class="dot" id="dotOnline"></span> En Línea: —</div>
+          </div>
+        </section>
+        
+        <section class="card">
+          <h3><i class="bi bi-activity"></i> Estadísticas Globales</h3>
+          <div class="kpis">
+            <div class="badge" id="kpiTotal"><i class="bi bi-globe2"></i> Total Global: —</div>
+            <div class="badge" id="kpiUpdated"><i class="bi bi-arrow-repeat"></i> Última Actualización: —</div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h3><i class="bi bi-whatsapp"></i> Enlaces de Contacto</h3>
+          <div class="contact-links">
+            <a href="https://whatsapp.com/channel/0029Vb6D6ogBVJl60Yr8YL31" target="_blank" class="contact-link">
+              <i class="bi bi-whatsapp"></i>
+              <span>Canal de WhatsApp</span>
+            </a>
+            <a href="https://wa.me/50585117242" target="_blank" class="contact-link">
+              <i class="bi bi-whatsapp"></i>
+              <span>Contacto: +505 85117242</span>
+            </a>
+          </div>
+        </section>
+      </div>
+      
+      <div id="connectSection" class="section hidden">
+        <section class="card">
+          <h3><i class="bi bi-whatsapp"></i> Conectar Nuevo Bot</h3>
+          <div class="formgrid" style="margin-bottom:16px">
+            <input id="phone" class="input" placeholder="+52 123 456 7890" inputmode="tel" autocomplete="tel">
+            <input id="label" class="input" placeholder="Nombre (ej: Soporte)" maxlength="40">
+          </div>
+          <div class="actions">
+            <button id="sendBtn" class="btn pulse"><i class="bi bi-send"></i> Solicitar Código</button>
+            <div id="status" class="badge hidden"><i class="bi bi-arrow-repeat spin"></i> Enviando…</div>
+          </div>
+        </section>
+      </div>
+      
+      <div id="botsSection" class="section hidden">
+        <section class="card">
+          <h3><i class="bi bi-robot"></i> Mis Bots</h3>
+          
+          <div id="botsListView" class="bots-list-view">
+            <div class="actions" style="justify-content:space-between;margin-bottom:16px">
+              <input id="search" class="input" placeholder="Buscar por nombre o JID" style="max-width:360px" autocomplete="off">
+              <div class="actions">
+                <button id="refresh" class="btn"><i class="bi bi-arrow-clockwise"></i> Actualizar</button>
+                <button id="syncAllBtn2" class="btn ghost"><i class="bi bi-arrow-repeat"></i> Sincronizar Todos</button>
+              </div>
+            </div>
+            
+            <div class="servers-grid" id="serversGrid">
+            </div>
+            
+            <p id="emptyMsg" class="sub hidden" style="margin-top:16px;text-align:center">
+              <i class="bi bi-robot" style="font-size:48px;margin-bottom:16px;display:block;opacity:0.5"></i>
+              Aún no tienes bots conectados.<br>
+              <a href="#" onclick="switchSection('connect')" style="color:var(--accent);text-decoration:underline">
+                Conecta tu primer bot
+              </a>
+            </p>
+          </div>
+          
+          <div id="botDetailView" class="bot-detail-view hidden">
+            <div class="detail-header" id="detailHeader">
+              <button id="backToList" class="btn ghost">
+                <i class="bi bi-arrow-left"></i> Volver a la lista
+              </button>
+              <div class="detail-header-content">
+                <h4 id="detailBotName">Nombre del Bot</h4>
+                <div class="bot-status-badge">
+                  <span class="dot" id="detailStatusDot"></span>
+                  <span id="detailStatusText">Desconectado</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="detail-content">
+              <div class="detail-info">
+                <div class="info-item">
+                  <label>JID:</label>
+                  <span id="detailJid">—</span>
+                </div>
+                <div class="info-item">
+                  <label>Nombre:</label>
+                  <span id="detailName">—</span>
+                </div>
+                <div class="info-item">
+                  <label>ID:</label>
+                  <span id="detailId">—</span>
+                </div>
+                <div class="info-item">
+                  <label>Estado:</label>
+                  <span id="detailLastSeen">—</span>
+                </div>
+              </div>
+              
+              <div class="detail-actions">
+                <h5><i class="bi bi-lightning-charge"></i> Acciones</h5>
+                <div class="action-buttons">
+                  <button id="detailCustomize" class="btn">
+                    <i class="bi bi-sliders"></i> Personalizar
+                  </button>
+                  <button id="detailLogs" class="btn">
+                    <i class="bi bi-terminal"></i> Ver Logs
+                  </button>
+                  <button id="detailDelete" class="btn ghost" style="color:var(--danger)">
+                    <i class="bi bi-trash"></i> Eliminar
+                  </button>
+                </div>
+              </div>
+              
+              <div class="detail-logs">
+                <h5><i class="bi bi-list-check"></i> Logs Recientes</h5>
+                <div id="detailLogsContent" class="logs-preview">
+                </div>
+                <button id="viewAllLogs" class="btn small" style="margin-top:12px">
+                  <i class="bi bi-terminal"></i> Ver todos los logs
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div id="customSection" class="section hidden">
+        <section class="card">
+          <h3><i class="bi bi-sliders"></i> Personalizar Bot</h3>
+          <p class="sub" id="customBotInfo">Selecciona un bot desde "Mis Bots" para personalizarlo.</p>
+          <div class="actions" id="customActions" style="margin-bottom:16px;display:none;flex-wrap:wrap;gap:8px">
+            <button id="customLogs" class="btn">
+              <i class="bi bi-terminal"></i> Logs
+            </button>
+            <button id="customDelete" class="btn ghost" style="color:var(--danger)">
+              <i class="bi bi-trash"></i> Eliminar
+            </button>
+          </div>
+          
+          <div class="form-field">
+            <div class="field-label">
+              <i class="bi bi-fonts"></i> Nombre del bot
+            </div>
+            <input id="customName" class="input" placeholder="Nombre del bot">
+          </div>
+          
+          <div class="form-field">
+            <div class="field-label">
+              <i class="bi bi-emoji-smile"></i> Emoji del bot
+            </div>
+            <input id="customEmoji" class="input" placeholder="Emoji del bot">
+          </div>
+          
+          <div class="form-field">
+            <div class="field-label">
+              <i class="bi bi-chat-text"></i> Texto de bienvenida del menú
+            </div>
+            <textarea id="customWelcomeText" class="input" rows="3" placeholder="Texto de bienvenida del menú"></textarea>
+          </div>
+          <div class="form-field">
+  <div class="field-label">
+    <i class="bi bi-file-text"></i> Texto completo del Menú
+  </div>
+  <textarea id="customMenuText" class="input" rows="10" placeholder="Plantilla completa del menú"></textarea>
+</div>
+<div class="form-field">
+  <div class="field-label">
+    <i class="bi bi-images"></i> URLs de medios del menú (separalas por | )
+  </div>
+  <textarea id="customMediaUrls" class="input" rows="3" placeholder="URLs de medios del menú, separadas por |"></textarea>
+</div>
+          
+          <div class="form-field">
+            <div class="field-label">
+              <i class="bi bi-image"></i> URL de la foto de los mensajes
+            </div>
+            <input id="customMenuPhoto" class="input" placeholder="URL de la foto de los mensajes">
+          </div>
+          
+          <div class="actions" style="margin-top:16px;justify-content:space-between;flex-wrap:wrap;gap:8px">
+            <button id="customBack" class="btn ghost">
+              <i class="bi bi-arrow-left"></i> Volver a Mis Bots
+            </button>
+            <button id="customSave" class="btn">
+              <i class="bi bi-check-circle"></i> Guardar Cambios
+            </button>
+          </div>
+        </section>
+      </div>
+      
+      <div id="docsSection" class="section hidden">
+        <section class="card">
+          <h3><i class="bi bi-file-text"></i> Documentación de la API</h3>
+          <div class="docs-content">
+            <div class="api-section">
+              <h4>Ejecutar Método en Bot</h4>
+              <div class="code-block">
+                <button class="copy-btn" data-target="execute-code">Copiar</button>
+                <pre id="execute-code"><code><span class="code-keyword">POST</span> <span class="code-string">/api/bot/execute</span>
+<span class="code-keyword">Headers</span>:
+  <span class="code-string">Content-Type</span>: <span class="code-string">application/json</span>
+  <span class="code-string">x-api-key</span>: <span class="code-string" id="api-key-example">TU_API_KEY_AQUÍ</span>
+
+<span class="code-keyword">Body</span>:
+{
+  <span class="code-string">"phone"</span>: <span class="code-string">"1234567890"</span>,
+  <span class="code-string">"method"</span>: <span class="code-string">"sendMessage"</span>,
+  <span class="code-string">"args"</span>: [
+    <span class="code-string">"1234567890@s.whatsapp.net"</span>,
+    {
+      <span class="code-string">"text"</span>: <span class="code-string">"Hola desde la API!"</span>
+    }
+  ]
+}</code></pre>
+              </div>
+            </div>
+            
+            <div class="api-section">
+              <h4>Enviar Mensaje de Texto</h4>
+              <div class="code-block">
+                <button class="copy-btn" data-target="text-code">Copiar</button>
+                <pre id="text-code"><code>{
+  <span class="code-string">"phone"</span>: <span class="code-string">"1234567890"</span>,
+  <span class="code-string">"method"</span>: <span class="code-string">"sendMessage"</span>,
+  <span class="code-string">"args"</span>: [
+    <span class="code-string">"1234567890@s.whatsapp.net"</span>,
+    {
+      <span class="code-string">"text"</span>: <span class="code-string">"Este es un mensaje de ejemplo"</span>
+    }
+  ]
+}</code></pre>
+              </div>
+            </div>
+            
+            <div class="api-section">
+              <h4>Enviar Mensaje con Imagen</h4>
+              <div class="code-block">
+                <button class="copy-btn" data-target="image-code">Copiar</button>
+                <pre id="image-code"><code>{
+  <span class="code-string">"phone"</span>: <span class="code-string">"1234567890"</span>,
+  <span class="code-string">"method"</span>: <span class="code-string">"sendMessage"</span>,
+  <span class="code-string">"args"</span>: [
+    <span class="code-string">"1234567890@s.whatsapp.net"</span>,
+    {
+      <span class="code-string">"image"</span>: {
+        <span class="code-string">"url"</span>: <span class="code-string">"https://ejemplo.com/imagen.jpg"</span>
+      },
+      <span class="code-string">"caption"</span>: <span class="code-string">"Imagen de ejemplo"</span>
+    }
+  ]
+}</code></pre>
+              </div>
+            </div>
+            
+            <div class="api-section">
+              <h4>Enviar Mensaje con Botones</h4>
+              <div class="code-block">
+                <button class="copy-btn" data-target="buttons-code">Copiar</button>
+                <pre id="buttons-code"><code>{
+  <span class="code-string">"phone"</span>: <span class="code-string">"1234567890"</span>,
+  <span class="code-string">"method"</span>: <span class="code-string">"sendMessage"</span>,
+  <span class="code-string">"args"</span>: [
+    <span class="code-string">"1234567890@s.whatsapp.net"</span>,
+    {
+      <span class="code-string">"text"</span>: <span class="code-string">"Selecciona una opción:"</span>,
+      <span class="code-string">"footer"</span>: <span class="code-string">"Menú de opciones"</span>,
+      <span class="code-string">"buttons"</span>: [
+        {
+          <span class="code-string">"buttonId"</span>: <span class="code-string">"id1"</span>,
+          <span class="code-string">"buttonText"</span>: {
+            <span class="code-string">"displayText"</span>: <span class="code-string">"Opción 1"</span>
+          },
+          <span class="code-string">"type"</span>: <span class="code-number">1</span>
+        },
+        {
+          <span class="code-string">"buttonId"</span>: <span class="code-string">"id2"</span>,
+          <span class="code-string">"buttonText"</span>: {
+            <span class="code-string">"displayText"</span>: <span class="code-string">"Opción 2"</span>
+          },
+          <span class="code-string">"type"</span>: <span class="code-number">1</span>
+        }
+      ]
+    }
+  ]
+}</code></pre>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      
+      <div id="profileSection" class="section hidden">
+        <section class="card">
+          <h3><i class="bi bi-person"></i> Información del Perfil</h3>
+          <div class="formgrid" style="margin-bottom:16px">
+            <input id="profileUsername" class="input" placeholder="Nombre de usuario" disabled>
+            <input id="profileEmail" class="input" placeholder="Correo electrónico" disabled>
+          </div>
+          <div class="formgrid">
+            <input id="profileApiKey" class="input" placeholder="API Key" disabled>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="codeModal" aria-hidden="true" aria-modal="true" role="dialog">
+    <div class="overlay" id="modalClose"></div>
+    <div class="content">
+      <h3 class="heading" style="font-size:22px;margin:0 0 6px">Código de Vinculación</h3>
+      <p class="sub" id="dlMeta">—</p>
+      <div id="digits" class="digits"></div>
+      <div class="kpis" style="margin-top:16px">
+        <div class="badge"><i class="bi bi-person"></i> <b style="margin-left:6px" id="kId">—</b></div>
+        <div class="badge"><i class="bi bi-key"></i> <b style="margin-left:6px" id="kCode">—</b></div>
+        <div class="badge"><i class="bi bi-activity"></i> <b style="margin-left:6px" id="kStatus">—</b></div>
+      </div>
+      <div class="actions" style="margin-top:16px;justify-content:flex-end">
+        <button id="btnBack" class="btn ghost"><i class="bi bi-arrow-counterclockwise"></i> Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="logsModal" aria-hidden="true" aria-modal="true" role="dialog">
+    <div class="overlay" id="logsOverlay"></div>
+    <div class="content">
+      <h3 class="heading" id="logTitle" style="font-size:22px;margin:0 0 6px">Logs del Bot</h3>
+      <p class="sub" id="logSub">—</p>
+      <div id="logBox" class="logbox"></div>
+      <div class="actions" style="margin-top:16px;justify-content:flex-end">
+        <button id="logsClear" class="btn ghost"><i class="bi bi-eraser"></i> Limpiar</button>
+        <button id="logsCopy" class="btn"><i class="bi bi-clipboard"></i> Copiar</button>
+        <button id="logsClose" class="btn alt"><i class="bi bi-x-circle"></i> Cerrar</button>
+      </div>
+    </div>
+  </div>
+  
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="script.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const targetId = this.getAttribute('data-target');
+            const target = document.getElementById(targetId);
+            if (target) {
+                const text = target.innerText || target.textContent;
+                const textArea = document.createElement('textarea');
+                textArea.value = text.trim();
+                document.body.appendChild(textArea);
+                textArea.select();
+                
+                let success = false;
+                try {
+                    success = document.execCommand('copy');
+                } catch (err) {
+                    success = false;
+                }
+                
+                document.body.removeChild(textArea);
+                
+                const originalText = this.innerHTML;
+                if (success) {
+                    this.innerHTML = '<i class="bi bi-check"></i> Copiado';
+                } else {
+                    this.innerHTML = '<i class="bi bi-x"></i> Error';
+                }
+                
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                }, 2000);
+            }
+        });
+    });
+});
+</script>
+</body>
+</html>

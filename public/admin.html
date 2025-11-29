@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0a0e17">
+<title>Panel de Administración — Neveloopp</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="dark">
+  <div class="dashboard">
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <h2><i class="bi bi-shield-check"></i> <span>Admin Panel</span></h2>
+      </div>
+      
+      <div class="user-info">
+        <div class="user-avatar">
+          <i class="bi bi-person-fill-gear"></i>
+        </div>
+        <div class="user-name" id="userName">Administrador</div>
+        <div class="user-email" id="userEmail">admin@neveloopp.com</div>
+        <div class="user-role" id="userRole">admin</div>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item active" data-section="overview">
+          <i class="bi bi-speedometer2"></i>
+          <span>Resumen General</span>
+        </a>
+        <a href="#" class="nav-item" data-section="users">
+          <i class="bi bi-people"></i>
+          <span>Usuarios</span>
+        </a>
+        <a href="#" class="nav-item" data-section="coins">
+          <i class="bi bi-coin"></i>
+          <span>Coins</span>
+        </a>
+        <a href="#" class="nav-item" data-section="system">
+          <i class="bi bi-gear"></i>
+          <span>Sistema</span>
+        </a>
+        <a href="#" class="nav-item" data-section="logs">
+          <i class="bi bi-terminal"></i>
+          <span>Logs</span>
+        </a>
+        <a href="/dash" class="nav-item">
+          <i class="bi bi-arrow-left"></i>
+          <span>Volver al Dash</span>
+        </a>
+        <a href="/logout" class="nav-item">
+          <i class="bi bi-box-arrow-right"></i>
+          <span>Cerrar Sesión</span>
+        </a>
+      </nav>
+    </div>
+    
+    <div class="main-content">
+      <div class="topbar">
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+          <i class="bi bi-list"></i>
+        </button>
+        <h1 id="pageTitle">Resumen General</h1>
+        <div class="topbar-actions">
+          <button id="themeToggle" class="btn ghost" aria-label="Cambiar tema">
+            <i class="bi bi-moon-stars"></i>
+          </button>
+          <a href="/logout" class="btn alt">
+            <i class="bi bi-box-arrow-right"></i> Salir
+          </a>
+        </div>
+      </div>
+      
+      <div id="overviewSection" class="section">
+        <section class="card">
+          <h3><i class="bi bi-graph-up-arrow"></i> Estadísticas del Sistema</h3>
+          <div class="kpis">
+            <div class="badge" id="kpiTotalUsers"><i class="bi bi-people"></i> Total Usuarios: —</div>
+            <div class="badge" id="kpiActiveBots"><span class="dot"></span> Bots Activos: —</div>
+            <div class="badge" id="kpiCoinsUsage"><i class="bi bi-coin"></i> Uso de Coins: —</div>
+          </div>
+        </section>
+        
+        <section class="card">
+          <h3><i class="bi bi-activity"></i> Métricas Rápidas</h3>
+          <div class="kpis">
+            <div class="badge" id="kpiAdmins"><i class="bi bi-shield-check"></i> Administradores: —</div>
+            <div class="badge" id="kpiRegularUsers"><i class="bi bi-person"></i> Usuarios Regulares: —</div>
+            <div class="badge" id="kpiMonthlyLimit"><i class="bi bi-arrow-repeat"></i> Límite Mensual: —</div>
+            <div class="badge" id="kpiLastUpdate"><i class="bi bi-clock"></i> Actualizado: —</div>
+          </div>
+        </section>
+      </div>
+      
+      <div id="usersSection" class="section hidden">
+        <section class="card">
+          <h3><i class="bi bi-people"></i> Gestión de Usuarios</h3>
+          
+          <div class="actions" style="justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:12px">
+            <input id="usersSearch" class="input" placeholder="Buscar por email o username" style="max-width:360px" autocomplete="off">
+            <div class="actions">
+              <button id="refreshUsers" class="btn">
+                <i class="bi bi-arrow-clockwise"></i> Actualizar
+              </button>
+              <button id="setGlobalCoins" class="btn">
+                <i class="bi bi-coin"></i> Límite Global
+              </button>
+            </div>
+          </div>
+          
+          <div class="servers-grid" id="usersGrid">
+          </div>
+          
+          <p id="usersEmptyMsg" class="sub hidden" style="margin-top:16px;text-align:center">
+            <i class="bi bi-people" style="font-size:48px;margin-bottom:16px;display:block;opacity:0.5"></i>
+            No hay usuarios registrados.
+          </p>
+        </section>
+      </div>
+      
+      <div id="coinsSection" class="section hidden">
+        <section class="card">
+          <h3><i class="bi bi-coin"></i> Estadísticas de Coins</h3>
+          
+          <div class="kpis" style="margin-bottom:24px">
+            <div class="badge" id="coinsTotalUsage"><i class="bi bi-graph-up"></i> Uso Total: —</div>
+            <div class="badge" id="coinsMonthlyLimit"><i class="bi bi-arrow-repeat"></i> Límite Mensual: —</div>
+            <div class="badge" id="coinsGlobalUsage"><i class="bi bi-percent"></i> Porcentaje Global: —</div>
+          </div>
+          
+          <div class="actions" style="justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:12px">
+            <input id="coinsSearch" class="input" placeholder="Buscar usuario" style="max-width:360px" autocomplete="off">
+            <div class="actions">
+              <button id="refreshCoins" class="btn">
+                <i class="bi bi-arrow-clockwise"></i> Actualizar
+              </button>
+              <button id="exportCoins" class="btn">
+                <i class="bi bi-download"></i> Exportar
+              </button>
+            </div>
+          </div>
+          
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Usuario</th>
+                  <th>Coins Actuales</th>
+                  <th>Límite Mensual</th>
+                  <th>Coins Usados</th>
+                  <th>% Uso</th>
+                  <th>Último Reset</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="coinsTable">
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+      
+      <div id="systemSection" class="section hidden">
+        <section class="card">
+          <h3><i class="bi bi-gear"></i> Configuración del Sistema</h3>
+          
+          <div class="form-field" style="margin-bottom:24px">
+            <div class="field-label">
+              <i class="bi bi-coin"></i> Límite Mensual de Coins Global
+            </div>
+            <div class="formgrid">
+              <input id="globalCoinsLimit" class="input" type="number" placeholder="500" min="1" max="10000">
+              <button id="saveGlobalCoins" class="btn">
+                <i class="bi bi-check-circle"></i> Guardar Cambios
+              </button>
+            </div>
+            <div class="sub" style="margin-top:8px">
+              Este cambio afectará a todos los usuarios existentes y nuevos.
+            </div>
+          </div>
+          
+          <div class="form-field">
+            <div class="field-label">
+              <i class="bi bi-database"></i> Información del Sistema
+            </div>
+            <div class="info-item" style="margin-bottom:12px">
+              <label>Límite Actual:</label>
+              <span id="currentCoinsLimit">—</span>
+            </div>
+            <div class="info-item" style="margin-bottom:12px">
+              <label>Total Usuarios:</label>
+              <span id="systemTotalUsers">—</span>
+            </div>
+            <div class="info-item">
+              <label>Última Actualización:</label>
+              <span id="systemLastUpdate">—</span>
+            </div>
+          </div>
+        </section>
+      </div>
+      
+      <div id="logsSection" class="section hidden">
+        <section class="card">
+          <h3><i class="bi bi-terminal"></i> Logs del Servidor en Tiempo Real</h3>
+          
+          <div class="actions" style="margin-bottom:16px;flex-wrap:wrap;gap:12px">
+            <button id="startLogs" class="btn">
+              <i class="bi bi-play-circle"></i> Iniciar Logs
+            </button>
+            <button id="stopLogs" class="btn ghost">
+              <i class="bi bi-stop-circle"></i> Detener Logs
+            </button>
+            <button id="clearLogs" class="btn ghost">
+              <i class="bi bi-eraser"></i> Limpiar
+            </button>
+            <button id="copyLogs" class="btn">
+              <i class="bi bi-clipboard"></i> Copiar
+            </button>
+          </div>
+          
+          <div id="serverLogs" class="logbox">
+            <div class="log-entry">
+              <span class="log-time">[00:00:00]</span>
+              <span class="log-message log-info">Esperando conexión...</span>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="userModal" aria-hidden="true" aria-modal="true" role="dialog">
+    <div class="overlay" id="userModalClose"></div>
+    <div class="content">
+      <h3 class="heading" style="font-size:22px;margin:0 0 6px">Gestión de Usuario</h3>
+      <p class="sub" id="userModalEmail">—</p>
+      
+      <div class="form-field" style="margin-bottom:16px">
+        <div class="field-label">Nombre de Usuario</div>
+        <input id="modalUsername" class="input" disabled>
+      </div>
+      
+      <div class="form-field" style="margin-bottom:16px">
+        <div class="field-label">Coins Actuales</div>
+        <input id="modalCoins" class="input" type="number" min="0">
+      </div>
+      
+      <div class="kpis" style="margin:16px 0">
+        <div class="badge"><i class="bi bi-robot"></i> <b style="margin-left:6px" id="modalBotsCount">—</b></div>
+        <div class="badge"><i class="bi bi-shield-check"></i> <b style="margin-left:6px" id="modalRole">—</b></div>
+        <div class="badge"><i class="bi bi-arrow-repeat"></i> <b style="margin-left:6px" id="modalLastReset">—</b></div>
+      </div>
+      
+      <div class="actions" style="margin-top:16px;justify-content:space-between;flex-wrap:wrap;gap:8px">
+        <div class="actions">
+          <button id="modalAddCoins" class="btn small">
+            <i class="bi bi-plus-circle"></i> Agregar Coins
+          </button>
+          <button id="modalRemoveCoins" class="btn small ghost">
+            <i class="bi bi-dash-circle"></i> Remover Coins
+          </button>
+        </div>
+        <div class="actions">
+          <button id="modalToggleAdmin" class="btn small">
+            <i class="bi bi-shield-check"></i> Cambiar Rol
+          </button>
+          <button id="modalDeleteUser" class="btn small" style="color:var(--danger)">
+            <i class="bi bi-trash"></i> Eliminar
+          </button>
+        </div>
+      </div>
+      
+      <div class="actions" style="margin-top:16px;justify-content:flex-end">
+        <button id="modalClose" class="btn alt"><i class="bi bi-x-circle"></i> Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="globalCoinsModal" aria-hidden="true" aria-modal="true" role="dialog">
+    <div class="overlay" id="globalCoinsModalClose"></div>
+    <div class="content">
+      <h3 class="heading" style="font-size:22px;margin:0 0 6px">Establecer Límite Global de Coins</h3>
+      <p class="sub">Este cambio afectará a todos los usuarios del sistema</p>
+      
+      <div class="form-field" style="margin-bottom:16px">
+        <div class="field-label">Nuevo Límite Mensual</div>
+        <input id="newGlobalCoins" class="input" type="number" placeholder="500" min="1" max="10000">
+      </div>
+      
+      <div class="kpis" style="margin:16px 0">
+        <div class="badge"><i class="bi bi-people"></i> <b style="margin-left:6px" id="globalUsersCount">—</b> usuarios afectados</div>
+        <div class="badge"><i class="bi bi-exclamation-triangle"></i> <b style="margin-left:6px">Esta acción no se puede deshacer</b></div>
+      </div>
+      
+      <div class="actions" style="margin-top:16px;justify-content:flex-end">
+        <button id="globalCoinsCancel" class="btn ghost">Cancelar</button>
+        <button id="globalCoinsSave" class="btn">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="admin-script.js"></script>
+</body>
+</html>
