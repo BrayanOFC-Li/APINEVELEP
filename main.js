@@ -6,8 +6,8 @@ const baileys = require('./baileys')
 const { downloadContentFromMessage, proto, generateWAMessageFromContent, prepareWAMessageMedia, WA_DEFAULT_EPHEMERAL, areJidsSameUser, jidNormalizedUser, generateWAMessage } = require('@whiskeysockets/baileys')
 const { imageToWebp, videoToWebp, writeExifImg, writeExifVid } = require('./libs/exif')
 
-const nvkey = 'TU KEY PUTA'
-const nvurl = 'https://apinevelep.vercel.app'
+const nvkey = 'KeyOFC'
+const nvurl = 'https://api-nexy.ultraplus.click'
 const numBot = '123456789@s.whatsapp.net'
 
 
