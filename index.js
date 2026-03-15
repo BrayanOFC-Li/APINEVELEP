@@ -16,7 +16,7 @@ app.use(cors({ origin: true, credentials: true }))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser())
-const PORT = process.env.PORT || 80
+const PORT = process.env.PORT || 30051
 
 const DATA_DIR = path.join(__dirname, 'data')
 const USERS_PATH = path.join(DATA_DIR, 'users.json')
